@@ -4,12 +4,25 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import org.springframework.context.annotation.Bean;
 
+import javax.validation.constraints.Email;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
+
+/**
+ * Uses Spring validation for attributes
+ */
 
 public class Customer {
     private Long id;
+    @NotBlank(message = "Name cannot be blank.")
+    @Size(min = 2, max = 20, message = "Minimum 2 letters, max 20.")
     private String name;
+    @NotBlank(message = "Email cannot be empty.")
+    @Email(message = "Email format invalid.") // We can also pass in a regex to the email annotation
     private String email;
     // For Jackson demo purposes
+    @NotBlank(message = "Must provide a password.")
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY) // So we can send a new password inside JSON payload
     private String password;
 

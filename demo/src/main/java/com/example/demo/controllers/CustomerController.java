@@ -5,6 +5,7 @@ import com.example.demo.services.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -30,8 +31,9 @@ public class CustomerController {
         return customerService.getCustomers();
     }
 
+    // @Valid enforces the validation constraints set inside the Customer class
     @PostMapping
-    void createCustomer(@RequestBody Customer customer) {
+    void createCustomer(@RequestBody @Valid Customer customer) {
         System.out.println("Creating a new customer");
         System.out.println(customer);
     }
