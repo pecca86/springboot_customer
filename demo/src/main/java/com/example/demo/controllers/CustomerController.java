@@ -23,7 +23,7 @@ public class CustomerController {
     @GetMapping(path = {"{customerId}"})
     Customer getCustomer(@PathVariable("customerId") Long id) {
         System.out.println("Getting customer with id: "+ id);
-        return customerService.getCustomer();
+        return customerService.getCustomer(id);
     }
 
     @GetMapping()

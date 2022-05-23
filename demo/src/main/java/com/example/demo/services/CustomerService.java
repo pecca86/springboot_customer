@@ -2,8 +2,10 @@ package com.example.demo.services;
 
 import com.example.demo.DAO.CustomerRepo;
 import com.example.demo.entities.Customer;
+import com.example.demo.exceptions.ApiRequestException;
+import com.example.demo.exceptions.BadRequestException;
+import com.example.demo.exceptions.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -26,8 +28,11 @@ public class CustomerService {
         this.customerRepo = customerRepo;
     }
 
-    public Customer getCustomer() {
-        return new Customer("Pekka", "Ranta-aho", 1L);
+    public Customer getCustomer(Long id) {
+        return customerRepo.getCustomers().stream()
+                .filter(customer -> customer.getId() == id)
+                .findFirst()
+                .orElseThrow(() -> new BadRequestException("Customer with given id not found!"));
     }
 
     public List<Customer> getCustomers() {
