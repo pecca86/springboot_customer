@@ -4,12 +4,17 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import org.springframework.context.annotation.Bean;
 
+
 public class Customer {
-    private final Long id;
-    private final String name;
-    private final String email;
+    private Long id;
+    private String name;
+    private String email;
     // For Jackson demo purposes
-    private final String password;
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY) // So we can send a new password inside JSON payload
+    private String password;
+
+    public Customer() {
+    }
 
     public Customer(String name, String email, Long id) {
         this.id = id;

@@ -3,12 +3,12 @@ package com.example.demo.controllers;
 import com.example.demo.entities.Customer;
 import com.example.demo.services.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
+@RequestMapping(path = "api/v1/customers")
 public class CustomerController {
 
     private final CustomerService customerService;
@@ -19,14 +19,32 @@ public class CustomerController {
     }
 
 
-    @GetMapping
-    Customer getCustomer(Long id) {
+    @GetMapping(path = {"{customerId}"})
+    Customer getCustomer(@PathVariable("customerId") Long id) {
+        System.out.println("Getting customer with id: "+ id);
         return customerService.getCustomer();
     }
 
-    @GetMapping("/customers")
+    @GetMapping()
     List<Customer> getCustomers() {
         return customerService.getCustomers();
+    }
+
+    @PostMapping
+    void createCustomer(@RequestBody Customer customer) {
+        System.out.println("Creating a new customer");
+        System.out.println(customer);
+    }
+
+    @DeleteMapping(path = "{customerId}")
+    void deleteCustomer(@PathVariable("customerId") Long id) {
+        System.out.println("Deleting customer with id: " + id);
+    }
+
+    @PutMapping
+    void updateCustomer(@RequestBody Customer customer) {
+        System.out.println("Updating customer...");
+        System.out.println("Result: " + customer);
     }
 
 }
