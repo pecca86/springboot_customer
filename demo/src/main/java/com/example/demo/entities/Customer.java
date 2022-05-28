@@ -4,6 +4,10 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import org.springframework.context.annotation.Bean;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.NotBlank;
@@ -13,7 +17,12 @@ import javax.validation.constraints.Size;
  * Uses Spring validation for attributes
  */
 
+@Entity
+@Table(name = "customer")
 public class Customer {
+
+    @Id
+    @Column(name = "id")
     private Long id;
     @NotBlank(message = "Name cannot be blank.")
     @Size(min = 2, max = 20, message = "Minimum 2 letters, max 20.")

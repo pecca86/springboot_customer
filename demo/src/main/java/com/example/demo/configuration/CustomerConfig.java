@@ -28,6 +28,6 @@ public class CustomerConfig {
     CustomerRepo customerRepo() {
         // Since the bean created is a singleton, the created one will be the only one the app uses
         System.out.println("useFakeCustomerRepo = " + useFakeCustomerRepo);
-        return useFakeCustomerRepo ? new CustomerFakeRepo() : new CustomerRepository();
+        return new CustomerFakeRepo();
     }
 }

@@ -1,6 +1,7 @@
 package com.example.demo.services;
 
 import com.example.demo.DAO.CustomerRepo;
+import com.example.demo.DAO.CustomerRepository;
 import com.example.demo.entities.Customer;
 import com.example.demo.exceptions.ApiRequestException;
 import com.example.demo.exceptions.BadRequestException;
@@ -13,7 +14,7 @@ import java.util.List;
 @Service
 public class CustomerService {
 
-    private CustomerRepo customerRepo;
+    private final CustomerRepository customerRepository;
 
     // If we have two repositories implementing the same interface, we cannot
     // Autowire without specifying with the @Qualifier annotation, which implementation
@@ -24,18 +25,16 @@ public class CustomerService {
 //    }
 
     @Autowired
-    public CustomerService(CustomerRepo customerRepo) {
-        this.customerRepo = customerRepo;
+    public CustomerService(CustomerRepository customerRepository) {
+        this.customerRepository = customerRepository;
     }
 
     public Customer getCustomer(Long id) {
-        return customerRepo.getCustomers().stream()
-                .filter(customer -> customer.getId() == id)
-                .findFirst()
-                .orElseThrow(() -> new BadRequestException("Customer with given id not found!"));
+        return customerRepository.findById(id)
+                .orElseThrow(() -> new NotFoundException("Customer with given id not found!"));
     }
 
     public List<Customer> getCustomers() {
-        return customerRepo.getCustomers();
+        return customerRepository.findAll();
     }
 }
