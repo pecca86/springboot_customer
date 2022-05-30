@@ -47,4 +47,8 @@ public class CustomerService {
         LOGGER.info("getCustomers was called");
         return customerRepository.findAll();
     }
+
+    public void createCustomer(Customer customer) {
+        customerRepository.save(customer);
+    }
 }

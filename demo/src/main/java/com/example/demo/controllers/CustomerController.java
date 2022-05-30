@@ -3,6 +3,7 @@ package com.example.demo.controllers;
 import com.example.demo.entities.Customer;
 import com.example.demo.services.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -33,9 +34,10 @@ public class CustomerController {
 
     // @Valid enforces the validation constraints set inside the Customer class
     @PostMapping
+    @Transactional
     void createCustomer(@RequestBody @Valid Customer customer) {
-        System.out.println("Creating a new customer");
         System.out.println(customer);
+        customerService.createCustomer(customer);
     }
 
     @DeleteMapping(path = "{customerId}")

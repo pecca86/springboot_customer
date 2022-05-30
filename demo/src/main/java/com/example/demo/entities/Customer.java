@@ -4,10 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import org.springframework.context.annotation.Bean;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.NotBlank;
@@ -23,6 +20,15 @@ public class Customer {
 
     @Id
     @Column(name = "id")
+    @SequenceGenerator(
+            name = "customer_sequence",
+            sequenceName = "customer_sequence",
+            allocationSize = 1
+    )
+    @GeneratedValue(
+            strategy = GenerationType.SEQUENCE,
+            generator = "customer_sequence"
+    )
     private Long id;
     @NotBlank(message = "Name cannot be blank.")
     @Size(min = 2, max = 20, message = "Minimum 2 letters, max 20.")
@@ -47,6 +53,12 @@ public class Customer {
 
     public Customer(String name, String email, Long id, String password) {
         this.id = id;
+        this.name = name;
+        this.email = email;
+        this.password = password;
+    }
+
+    public Customer(String name, String email, String password) {
         this.name = name;
         this.email = email;
         this.password = password;
