@@ -1,37 +1,18 @@
 package com.example.demo.exceptions;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 
 import java.time.ZonedDateTime;
 
-public class ApiException {
-    private final String message;
-    private final Throwable throwable;
-    private final HttpStatus httpStatus;
-    private final ZonedDateTime zonedDateTime;
-
-    public ApiException(String message, Throwable throwable, HttpStatus httpStatus, ZonedDateTime zonedDateTime) {
-        this.message = message;
-        this.throwable = throwable;
-        this.httpStatus = httpStatus;
-        this.zonedDateTime = zonedDateTime;
-    }
-
-    public String getMessage() {
-        return message;
-    }
-
-    public Throwable getThrowable() {
-        return throwable;
-    }
-
-    public HttpStatus getHttpStatus() {
-        return httpStatus;
-    }
-
-    public ZonedDateTime getZonedDateTime() {
-        return zonedDateTime;
-    }
+// Record gives us:
+// private final attributes, getters, setter, constructor, equals, hashcode,toString
+public record ApiException(
+        String message,
+        Throwable throwable,
+        HttpStatus httpStatus,
+        ZonedDateTime zonedDateTime
+) {
 
     @Override
     public String toString() {
